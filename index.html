@@ -6,43 +6,109 @@
 <title>MENDE</title>
 
 <style>
-body{margin:0;font-family:Arial;background:#0b0b0b;color:white;}
-header{position:sticky;top:0;background:black;padding:10px;text-align:center;border-bottom:2px solid #ffcc00;}
-.logo img{height:60px;}
-.search{width:90%;padding:10px;margin:10px;border-radius:6px;border:none;}
-
-.tabs{display:flex;overflow:auto;gap:10px;padding:10px;}
-.tabs button{background:#222;color:white;border:none;padding:8px 12px;border-radius:20px;}
-.tabs button.active{background:#ffcc00;color:black;}
-
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px;padding:20px;}
-.card{background:#1a1a1a;border-radius:10px;overflow:hidden;position:relative;}
-.card img{width:100%;height:150px;object-fit:cover;}
-.badge{position:absolute;top:10px;left:10px;background:#ffcc00;color:black;padding:3px 8px;border-radius:10px;font-size:12px;}
-.card-content{padding:10px;}
-button{background:#ffcc00;border:none;padding:8px;width:100%;margin-top:5px;border-radius:5px;}
-
-.cart{position:fixed;right:0;top:0;width:300px;height:100%;background:#111;padding:15px;overflow:auto;}
-.qty{display:flex;gap:5px;}
-.qty button{width:30px;}
-  .cart{
-position:fixed !important;
-bottom:0 !important;
-left:0 !important;
-width:100% !important;
-height:200px !important;
-background:#111 !important;
-padding:10px !important;
-overflow:auto !important;
-border-top:2px solid #ffcc00 !important;
+body{
+margin:0;
+font-family:Arial;
+background:#0b0b0b;
+color:white;
 }
 
+/* HEADER */
+header{
+background:black;
+padding:15px;
+text-align:center;
+border-bottom:2px solid #ffcc00;
+position:sticky;
+top:0;
+z-index:100;
+}
+
+.logo img{
+height:60px;
+}
+
+/* SEARCH */
+.search{
+width:90%;
+padding:10px;
+margin:10px;
+border-radius:8px;
+border:none;
+}
+
+/* TABS */
+.tabs{
+display:flex;
+overflow:auto;
+gap:10px;
+padding:10px;
+}
+.tabs button{
+background:#222;
+color:white;
+border:none;
+padding:8px 12px;
+border-radius:20px;
+}
+.tabs button.active{
+background:#ffcc00;
+color:black;
+}
+
+/* MENU */
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+gap:15px;
+padding:15px;
+}
+
+.card{
+background:#1a1a1a;
+border-radius:10px;
+overflow:hidden;
+}
+
+.card img{
+width:100%;
+height:120px;
+object-fit:cover;
+}
+
+.card-content{
+padding:10px;
+}
+
+button{
+background:#ffcc00;
+border:none;
+padding:8px;
+width:100%;
+margin-top:5px;
+border-radius:6px;
+}
+
+/* CART MOBILE */
+.cart{
+position:fixed;
+bottom:0;
+left:0;
+width:100%;
+height:180px;
+background:#111;
+padding:10px;
+overflow:auto;
+border-top:2px solid #ffcc00;
+}
+
+/* DESKTOP */
 @media (min-width:768px){
 .cart{
-right:0 !important;
-top:0 !important;
-width:300px !important;
-height:100% !important;
+right:0;
+top:0;
+width:300px;
+height:100%;
 }
 }
 </style>
@@ -51,7 +117,9 @@ height:100% !important;
 <body>
 
 <header>
-<div class="logo"><img src="logo.png"></div>
+<div class="logo">
+<img src="https://via.placeholder.com/200x60?text=MENDE">
+</div>
 <input class="search" placeholder="ძიება..." oninput="searchMenu(this.value)">
 </header>
 
@@ -59,7 +127,7 @@ height:100% !important;
 
 <div class="grid" id="menu"></div>
 
-<div class="cart" style="position:fixed;bottom:0;left:0;width:100%;height:200px;background:#111;padding:10px;overflow:auto;border-top:2px solid #ffcc00;">
+<div class="cart">
 <h3>🛒</h3>
 <div id="cart"></div>
 <h4 id="total">0₾</h4>
@@ -73,94 +141,83 @@ let phone="9955XXXXXXXX";
 let whatsapp="9955XXXXXXXX";
 
 let products=[
-{name:"ხაჭაპური",price:14,cat:"ქართული",img:"https://images.unsplash.com/photo-1604908176997-431b6a5f6c2d",best:true},
+{name:"ხაჭაპური",price:14,cat:"ქართული",img:"https://images.unsplash.com/photo-1604908176997-431b6a5f6c2d"},
 {name:"ლობიანი",price:10,cat:"ქართული",img:"https://images.unsplash.com/photo-1625944236053-9b7bb2e8d9a1"},
-{name:"პური",price:2,cat:"ქართული",img:"https://images.unsplash.com/photo-1608198093002-ad4e005484ec"},
-
 {name:"ქათმის სალათი",price:16,cat:"სალათები",img:"https://images.unsplash.com/photo-1562967916-eb82221dfb36"},
-
-{name:"ჩიხირთმა",price:12,cat:"სუპები",img:"https://images.unsplash.com/photo-1604908177522-4321c8e0c6c2"},
+{name:"ოსტრი",price:18,cat:"ცხელი",img:"https://images.unsplash.com/photo-1604909052635-25f5d0f1d4c2"},
 {name:"ხარჩო",price:16,cat:"სუპები",img:"https://images.unsplash.com/photo-1605475120433-2c8b3b7b2d3f"},
-{name:"ოსპის კრემსუპი",price:11,cat:"სუპები",img:"https://images.unsplash.com/photo-1547592180-85f173990554"},
-
-{name:"ოსტრი",price:18,cat:"ცხელი",img:"https://images.unsplash.com/photo-1604909052635-25f5d0f1d4c2",best:true},
-{name:"გებჟალია",price:15,cat:"ცხელი",img:"https://images.unsplash.com/photo-1600891964092-4316c288032e"},
-{name:"საცივი",price:19,cat:"ცხელი",img:"https://images.unsplash.com/photo-1617196034734-1c3c8c9c8e9d"},
-{name:"ლობიო",price:12,cat:"ცხელი",img:"https://images.unsplash.com/photo-1613145997970-db84a7975fbb"},
-{name:"ქათმის ფილე შემწვარი",price:18,cat:"ცხელი",img:"https://images.unsplash.com/photo-1604908177232-2d9e5c8d3d3c"},
-
-{name:"ბურიტო ოსტრით",price:20,cat:"street",img:"https://images.unsplash.com/photo-1600891963935-9d1c6f5d6c6d",best:true},
+{name:"ბურიტო ოსტრით",price:20,cat:"street",img:"https://images.unsplash.com/photo-1600891963935-9d1c6f5d6c6d"},
 {name:"ქათმის ვრაპი",price:15,cat:"street",img:"https://images.unsplash.com/photo-1600891964599-f61ba0e24092"}
 ];
 
-let cart=JSON.parse(localStorage.getItem("cart"))||[];
-let currentCat="ყველა";
+let cart=[];
 
 function renderTabs(){
 let cats=["ყველა",...new Set(products.map(p=>p.cat))];
-let t=document.getElementById("tabs");t.innerHTML="";
+let t=document.getElementById("tabs");
+t.innerHTML="";
 cats.forEach(c=>{
-t.innerHTML+=`<button onclick="filterCat('${c}')" class="${c===currentCat?'active':''}">${c}</button>`;
+t.innerHTML+=`<button onclick="filterCat('${c}')">${c}</button>`;
 });
 }
 
-function filterCat(c){currentCat=c;renderTabs();renderMenu();}
+let currentCat="ყველა";
+
+function filterCat(c){
+currentCat=c;
+renderMenu();
+}
 
 function renderMenu(){
-let menu=document.getElementById("menu");menu.innerHTML="";
+let menu=document.getElementById("menu");
+menu.innerHTML="";
 let list=products.filter(p=>currentCat==="ყველა"||p.cat===currentCat);
+
 list.forEach((p,i)=>{
 menu.innerHTML+=`
 <div class="card">
-${p.best?'<div class="badge">🔥 TOP</div>':''}
 <img src="${p.img}">
 <div class="card-content">
 <h4>${p.name}</h4>
 <p>${p.price}₾</p>
 <button onclick="add(${i})">დამატება</button>
-</div></div>`;
+</div>
+</div>`;
 });
 }
 
 function add(i){
-let f=cart.find(x=>x.name===products[i].name);
-if(f){f.qty++;}else{cart.push({...products[i],qty:1});}
-save();renderCart();
+cart.push(products[i]);
+renderCart();
 }
 
 function renderCart(){
-let c=document.getElementById("cart");c.innerHTML="";
+let c=document.getElementById("cart");
+c.innerHTML="";
 let total=0;
-cart.forEach((x,i)=>{
-c.innerHTML+=`
-<div>
-<p>${x.name}</p>
-<div class="qty">
-<button onclick="dec(${i})">-</button>
-<span>${x.qty}</span>
-<button onclick="inc(${i})">+</button>
-</div>
-</div>`;
-total+=x.qty*x.price;
+
+cart.forEach(x=>{
+c.innerHTML+=`<p>${x.name} - ${x.price}₾</p>`;
+total+=x.price;
 });
+
 document.getElementById("total").innerText=total+"₾";
 }
 
-function inc(i){cart[i].qty++;save();renderCart();}
-function dec(i){cart[i].qty--;if(cart[i].qty<=0)cart.splice(i,1);save();renderCart();}
-function save(){localStorage.setItem("cart",JSON.stringify(cart));}
-
 function sendWhatsApp(){
 let text="MENDE შეკვეთა:%0A";
-cart.forEach(x=>{text+=x.name+" x"+x.qty+"%0A";});
+cart.forEach(x=>{text+=x.name+"%0A";});
 window.open(`https://wa.me/${whatsapp}?text=${text}`);
 }
 
-function callNow(){window.location.href="tel:"+phone;}
+function callNow(){
+window.location.href="tel:"+phone;
+}
 
 function searchMenu(q){
 let filtered=products.filter(p=>p.name.includes(q));
-document.getElementById("menu").innerHTML="";
+let menu=document.getElementById("menu");
+menu.innerHTML="";
 filtered.forEach((p,i)=>{
 menu.innerHTML+=`
 <div class="card">
@@ -169,11 +226,13 @@ menu.innerHTML+=`
 <h4>${p.name}</h4>
 <p>${p.price}₾</p>
 <button onclick="add(${i})">დამატება</button>
-</div></div>`;
+</div>
+</div>`;
 });
 }
 
-renderTabs();renderMenu();renderCart();
+renderTabs();
+renderMenu();
 
 </script>
 
