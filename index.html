@@ -3,257 +3,158 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MENDE Luxury</title>
+<title>MENDE</title>
 
 <style>
-body {
-margin:0;
-font-family:Arial;
-background:#050505;
-color:white;
-}
+body{margin:0;font-family:Arial;background:#0b0b0b;color:white;}
+header{position:sticky;top:0;background:black;padding:10px;text-align:center;border-bottom:2px solid #ffcc00;}
+.logo img{height:60px;}
+.search{width:90%;padding:10px;margin:10px;border-radius:6px;border:none;}
 
-/* HERO */
-header {
-height:100vh;
-background:linear-gradient(rgba(0,0,0,0.7),black),
-url('https://images.unsplash.com/photo-1550547660-d9450f859349') center/cover;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-text-align:center;
-}
+.tabs{display:flex;overflow:auto;gap:10px;padding:10px;}
+.tabs button{background:#222;color:white;border:none;padding:8px 12px;border-radius:20px;}
+.tabs button.active{background:#ffcc00;color:black;}
 
-h1 {
-font-size:55px;
-color:#d4af37;
-letter-spacing:3px;
-}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px;padding:20px;}
+.card{background:#1a1a1a;border-radius:10px;overflow:hidden;position:relative;}
+.card img{width:100%;height:150px;object-fit:cover;}
+.badge{position:absolute;top:10px;left:10px;background:#ffcc00;color:black;padding:3px 8px;border-radius:10px;font-size:12px;}
+.card-content{padding:10px;}
+button{background:#ffcc00;border:none;padding:8px;width:100%;margin-top:5px;border-radius:5px;}
 
-.btn {
-padding:12px 25px;
-margin:5px;
-border:none;
-border-radius:30px;
-font-size:15px;
-}
-
-.gold {background:#d4af37;color:black;}
-.dark {background:#222;color:white;}
-
-/* SECTION */
-.section {padding:40px 20px;}
-
-h2 {color:#d4af37;text-align:center;}
-
-/* FILTER */
-.filter {text-align:center;margin-bottom:20px;}
-.filter button {
-margin:5px;
-padding:8px 15px;
-border:none;
-border-radius:20px;
-background:#222;
-color:white;
-}
-
-/* MENU */
-.menu {
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:15px;
-}
-
-.card {
-background:rgba(255,255,255,0.05);
-backdrop-filter:blur(12px);
-border-radius:15px;
-overflow:hidden;
-transition:0.3s;
-}
-
-.card:hover {transform:scale(1.03);}
-
-.card img {
-width:100%;
-height:150px;
-object-fit:cover;
-}
-
-.card h3 {margin:10px;}
-.card p {margin:0 10px 10px;color:#aaa;}
-
-.card button {
-width:90%;
-margin:10px;
-padding:10px;
-border:none;
-border-radius:20px;
-background:#d4af37;
-}
-
-/* CART */
-.cart {
-position:fixed;
-bottom:0;
-width:100%;
-background:#111;
-padding:10px;
-border-top:1px solid #d4af37;
-}
-
-.cart-item {
-display:flex;
-justify-content:space-between;
-margin:5px 0;
-}
-
-/* FOOTER */
-footer {
-text-align:center;
-padding:20px;
-}
+.cart{position:fixed;right:0;top:0;width:300px;height:100%;background:#111;padding:15px;overflow:auto;}
+.qty{display:flex;gap:5px;}
+.qty button{width:30px;}
 </style>
-
 </head>
 
 <body>
 
 <header>
-<h1>MENDE</h1>
-<p>Luxury Street Food • Tbilisi</p>
-
-<button class="btn gold" onclick="call()">დარეკვა</button>
-<button class="btn dark" onclick="whatsapp()">WhatsApp</button>
-<button class="btn dark" onclick="maps()">რუქა</button>
+<div class="logo"><img src="logo.png"></div>
+<input class="search" placeholder="ძიება..." oninput="searchMenu(this.value)">
 </header>
 
-<section class="section">
-<h2>მენიუ</h2>
+<div class="tabs" id="tabs"></div>
 
-<div class="filter">
-<button onclick="filter('all')">ყველა</button>
-<button onclick="filter('georgian')">ქართული</button>
-<button onclick="filter('fast')">სწრაფი</button>
+<div class="grid" id="menu"></div>
+
+<div class="cart">
+<h3>🛒</h3>
+<div id="cart"></div>
+<h4 id="total">0₾</h4>
+<button onclick="sendWhatsApp()">WhatsApp</button>
+<button onclick="callNow()">დარეკვა</button>
 </div>
-
-<div class="menu">
-
-<div class="card georgian">
-<img src="https://images.unsplash.com/photo-1548365328-9f547fb0953d">
-<h3>ხაჭაპური</h3>
-<p>10₾</p>
-<button onclick="add('ხაჭაპური',10)">დამატება</button>
-</div>
-
-<div class="card georgian">
-<img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d">
-<h3>ლობიანი</h3>
-<p>8₾</p>
-<button onclick="add('ლობიანი',8)">დამატება</button>
-</div>
-
-<div class="card fast">
-<img src="https://images.unsplash.com/photo-1550547660-d9450f859349">
-<h3>ბურგერი</h3>
-<p>15₾</p>
-<button onclick="add('ბურგერი',15)">დამატება</button>
-</div>
-
-<div class="card fast">
-<img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092">
-<h3>სალათი</h3>
-<p>7₾</p>
-<button onclick="add('სალათი',7)">დამატება</button>
-</div>
-
-<div class="card georgian">
-<img src="https://images.unsplash.com/photo-1625944525903-bd5f7cba3d0f">
-<h3>გებჟალია</h3>
-<p>11₾</p>
-<button onclick="add('გებჟალია',11)">დამატება</button>
-</div>
-
-<div class="card georgian">
-<img src="https://images.unsplash.com/photo-1617196035154-1e3f0b4b3c7a">
-<h3>თევზი</h3>
-<p>18₾</p>
-<button onclick="add('თევზი',18)">დამატება</button>
-</div>
-
-</div>
-</section>
-
-<div class="cart" id="cart"></div>
-
-<footer>
-📍 თბილისი • 📞 597122552 • @giga_jaiani1
-</footer>
 
 <script>
-let cart=[];
 
-function add(name,price){
-let found=cart.find(i=>i.name===name);
-if(found){found.qty++;}
-else{cart.push({name,price,qty:1});}
-render();
+let phone="9955XXXXXXXX";
+let whatsapp="9955XXXXXXXX";
+
+let products=[
+{name:"ხაჭაპური",price:14,cat:"ქართული",img:"https://images.unsplash.com/photo-1604908176997-431b6a5f6c2d",best:true},
+{name:"ლობიანი",price:10,cat:"ქართული",img:"https://images.unsplash.com/photo-1625944236053-9b7bb2e8d9a1"},
+{name:"პური",price:2,cat:"ქართული",img:"https://images.unsplash.com/photo-1608198093002-ad4e005484ec"},
+
+{name:"ქათმის სალათი",price:16,cat:"სალათები",img:"https://images.unsplash.com/photo-1562967916-eb82221dfb36"},
+
+{name:"ჩიხირთმა",price:12,cat:"სუპები",img:"https://images.unsplash.com/photo-1604908177522-4321c8e0c6c2"},
+{name:"ხარჩო",price:16,cat:"სუპები",img:"https://images.unsplash.com/photo-1605475120433-2c8b3b7b2d3f"},
+{name:"ოსპის კრემსუპი",price:11,cat:"სუპები",img:"https://images.unsplash.com/photo-1547592180-85f173990554"},
+
+{name:"ოსტრი",price:18,cat:"ცხელი",img:"https://images.unsplash.com/photo-1604909052635-25f5d0f1d4c2",best:true},
+{name:"გებჟალია",price:15,cat:"ცხელი",img:"https://images.unsplash.com/photo-1600891964092-4316c288032e"},
+{name:"საცივი",price:19,cat:"ცხელი",img:"https://images.unsplash.com/photo-1617196034734-1c3c8c9c8e9d"},
+{name:"ლობიო",price:12,cat:"ცხელი",img:"https://images.unsplash.com/photo-1613145997970-db84a7975fbb"},
+{name:"ქათმის ფილე შემწვარი",price:18,cat:"ცხელი",img:"https://images.unsplash.com/photo-1604908177232-2d9e5c8d3d3c"},
+
+{name:"ბურიტო ოსტრით",price:20,cat:"street",img:"https://images.unsplash.com/photo-1600891963935-9d1c6f5d6c6d",best:true},
+{name:"ქათმის ვრაპი",price:15,cat:"street",img:"https://images.unsplash.com/photo-1600891964599-f61ba0e24092"}
+];
+
+let cart=JSON.parse(localStorage.getItem("cart"))||[];
+let currentCat="ყველა";
+
+function renderTabs(){
+let cats=["ყველა",...new Set(products.map(p=>p.cat))];
+let t=document.getElementById("tabs");t.innerHTML="";
+cats.forEach(c=>{
+t.innerHTML+=`<button onclick="filterCat('${c}')" class="${c===currentCat?'active':''}">${c}</button>`;
+});
 }
 
-function render(){
-let html="";
+function filterCat(c){currentCat=c;renderTabs();renderMenu();}
+
+function renderMenu(){
+let menu=document.getElementById("menu");menu.innerHTML="";
+let list=products.filter(p=>currentCat==="ყველა"||p.cat===currentCat);
+list.forEach((p,i)=>{
+menu.innerHTML+=`
+<div class="card">
+${p.best?'<div class="badge">🔥 TOP</div>':''}
+<img src="${p.img}">
+<div class="card-content">
+<h4>${p.name}</h4>
+<p>${p.price}₾</p>
+<button onclick="add(${i})">დამატება</button>
+</div></div>`;
+});
+}
+
+function add(i){
+let f=cart.find(x=>x.name===products[i].name);
+if(f){f.qty++;}else{cart.push({...products[i],qty:1});}
+save();renderCart();
+}
+
+function renderCart(){
+let c=document.getElementById("cart");c.innerHTML="";
 let total=0;
-
-cart.forEach((i,index)=>{
-total+=i.price*i.qty;
-html+=`
-<div class="cart-item">
-${i.name} x${i.qty} - ${i.price*i.qty}₾
-<button onclick="remove(${index})">❌</button>
+cart.forEach((x,i)=>{
+c.innerHTML+=`
+<div>
+<p>${x.name}</p>
+<div class="qty">
+<button onclick="dec(${i})">-</button>
+<span>${x.qty}</span>
+<button onclick="inc(${i})">+</button>
+</div>
 </div>`;
+total+=x.qty*x.price;
 });
-
-html+=`<b>ჯამი: ${total}₾</b><br>
-<button onclick="checkout()">შეკვეთა</button>`;
-
-document.getElementById("cart").innerHTML=html;
+document.getElementById("total").innerText=total+"₾";
 }
 
-function remove(i){
-cart.splice(i,1);
-render();
+function inc(i){cart[i].qty++;save();renderCart();}
+function dec(i){cart[i].qty--;if(cart[i].qty<=0)cart.splice(i,1);save();renderCart();}
+function save(){localStorage.setItem("cart",JSON.stringify(cart));}
+
+function sendWhatsApp(){
+let text="MENDE შეკვეთა:%0A";
+cart.forEach(x=>{text+=x.name+" x"+x.qty+"%0A";});
+window.open(`https://wa.me/${whatsapp}?text=${text}`);
 }
 
-function checkout(){
-let msg="შეკვეთა:%0A";
-cart.forEach(i=>{
-msg+=i.name+" x"+i.qty+"%0A";
-});
-window.open("https://wa.me/995597122552?text="+msg);
-}
+function callNow(){window.location.href="tel:"+phone;}
 
-function call(){
-window.location.href="tel:+995597122552";
-}
-
-function whatsapp(){
-window.open("https://wa.me/995597122552");
-}
-
-function maps(){
-window.open("https://maps.google.com");
-}
-
-function filter(type){
-let cards=document.querySelectorAll('.card');
-cards.forEach(c=>{
-if(type==='all'){c.style.display='block';}
-else{
-c.style.display=c.classList.contains(type)?'block':'none';
-}
+function searchMenu(q){
+let filtered=products.filter(p=>p.name.includes(q));
+document.getElementById("menu").innerHTML="";
+filtered.forEach((p,i)=>{
+menu.innerHTML+=`
+<div class="card">
+<img src="${p.img}">
+<div class="card-content">
+<h4>${p.name}</h4>
+<p>${p.price}₾</p>
+<button onclick="add(${i})">დამატება</button>
+</div></div>`;
 });
 }
+
+renderTabs();renderMenu();renderCart();
+
 </script>
 
 </body>
