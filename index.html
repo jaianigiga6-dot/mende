@@ -6,12 +6,7 @@
 <title>MENDE</title>
 
 <style>
-body{
-margin:0;
-font-family:Arial;
-background:#0b0b0b;
-color:white;
-}
+body{margin:0;font-family:Arial;background:#0b0b0b;color:white;}
 
 /* HEADER */
 header{
@@ -24,8 +19,17 @@ top:0;
 z-index:100;
 }
 
-.logo img{
-height:60px;
+.logo{
+font-size:28px;
+color:#ffcc00;
+font-weight:bold;
+letter-spacing:2px;
+}
+
+/* HERO */
+.hero{
+padding:20px;
+text-align:center;
 }
 
 /* SEARCH */
@@ -45,15 +49,10 @@ gap:10px;
 padding:10px;
 }
 .tabs button{
-background:#222;
-color:white;
-border:none;
-padding:8px 12px;
-border-radius:20px;
+background:#222;color:white;border:none;padding:8px 12px;border-radius:20px;
 }
 .tabs button.active{
-background:#ffcc00;
-color:black;
+background:#ffcc00;color:black;
 }
 
 /* MENU */
@@ -72,7 +71,7 @@ overflow:hidden;
 
 .card img{
 width:100%;
-height:120px;
+height:130px;
 object-fit:cover;
 }
 
@@ -89,7 +88,7 @@ margin-top:5px;
 border-radius:6px;
 }
 
-/* CART MOBILE */
+/* CART */
 .cart{
 position:fixed;
 bottom:0;
@@ -102,7 +101,6 @@ overflow:auto;
 border-top:2px solid #ffcc00;
 }
 
-/* DESKTOP */
 @media (min-width:768px){
 .cart{
 right:0;
@@ -111,29 +109,60 @@ width:300px;
 height:100%;
 }
 }
+
+/* ABOUT */
+.about{
+padding:20px;
+background:#111;
+}
+
+/* FOOTER */
+footer{
+padding:20px;
+text-align:center;
+background:black;
+border-top:1px solid #333;
+}
 </style>
 </head>
 
 <body>
 
 <header>
-<div class="logo">
-<img src="https://via.placeholder.com/200x60?text=MENDE">
-</div>
+<div class="logo">MENDE</div>
 <input class="search" placeholder="ძიება..." oninput="searchMenu(this.value)">
 </header>
 
-<div class="tabs" id="tabs"></div>
+<section class="hero">
+<h2>🔥 ქართული + Street Food</h2>
+<p>სწრაფი, გემრიელი და ხარისხიანი საკვები</p>
+</section>
 
+<div class="tabs" id="tabs"></div>
 <div class="grid" id="menu"></div>
 
+<section class="about">
+<h3>ჩვენ შესახებ</h3>
+<p>MENDE არის თანამედროვე street food სივრცე, სადაც ერთიანდება ქართული ტრადიციული კერძები და თანამედროვე სწრაფი კვება. ჩვენი მიზანია ხარისხიანი, გემრიელი და სწრაფი სერვისი.</p>
+
+<h3>მისამართი</h3>
+<p>თბილისი, საქართველო</p>
+
+<h3>ტელეფონი</h3>
+<p>+995 5XX XXX XXX</p>
+</section>
+
 <div class="cart">
-<h3>🛒</h3>
+<h3>🛒 კალათა</h3>
 <div id="cart"></div>
 <h4 id="total">0₾</h4>
-<button onclick="sendWhatsApp()">WhatsApp</button>
+<button onclick="sendWhatsApp()">WhatsApp შეკვეთა</button>
 <button onclick="callNow()">დარეკვა</button>
 </div>
+
+<footer>
+<p>© MENDE 2026</p>
+</footer>
 
 <script>
 
@@ -141,16 +170,18 @@ let phone="9955XXXXXXXX";
 let whatsapp="9955XXXXXXXX";
 
 let products=[
-{name:"ხაჭაპური",price:14,cat:"ქართული",img:"https://images.unsplash.com/photo-1604908176997-431b6a5f6c2d"},
-{name:"ლობიანი",price:10,cat:"ქართული",img:"https://images.unsplash.com/photo-1625944236053-9b7bb2e8d9a1"},
-{name:"ქათმის სალათი",price:16,cat:"სალათები",img:"https://images.unsplash.com/photo-1562967916-eb82221dfb36"},
-{name:"ოსტრი",price:18,cat:"ცხელი",img:"https://images.unsplash.com/photo-1604909052635-25f5d0f1d4c2"},
-{name:"ხარჩო",price:16,cat:"სუპები",img:"https://images.unsplash.com/photo-1605475120433-2c8b3b7b2d3f"},
-{name:"ბურიტო ოსტრით",price:20,cat:"street",img:"https://images.unsplash.com/photo-1600891963935-9d1c6f5d6c6d"},
-{name:"ქათმის ვრაპი",price:15,cat:"street",img:"https://images.unsplash.com/photo-1600891964599-f61ba0e24092"}
+{name:"ხაჭაპური",price:14,cat:"ქართული",img:"https://upload.wikimedia.org/wikipedia/commons/3/3e/Adjarian_Khachapuri.jpg"},
+{name:"ლობიანი",price:10,cat:"ქართული",img:"https://upload.wikimedia.org/wikipedia/commons/6/6b/Lobiani.jpg"},
+{name:"ხარჩო",price:16,cat:"სუპები",img:"https://upload.wikimedia.org/wikipedia/commons/4/4d/Kharcho.jpg"},
+{name:"ჩიხირთმა",price:12,cat:"სუპები",img:"https://upload.wikimedia.org/wikipedia/commons/5/5b/Chikhirtma.jpg"},
+{name:"ოსტრი",price:18,cat:"ცხელი",img:"https://upload.wikimedia.org/wikipedia/commons/2/2b/Ostri.jpg"},
+{name:"საცივი",price:19,cat:"ცხელი",img:"https://upload.wikimedia.org/wikipedia/commons/7/7c/Satsivi.jpg"},
+{name:"ქათმის ვრაპი",price:15,cat:"street",img:"https://images.unsplash.com/photo-1600891964599-f61ba0e24092"},
+{name:"ბურიტო",price:20,cat:"street",img:"https://images.unsplash.com/photo-1600891963935-9d1c6f5d6c6d"}
 ];
 
 let cart=[];
+let currentCat="ყველა";
 
 function renderTabs(){
 let cats=["ყველა",...new Set(products.map(p=>p.cat))];
@@ -160,8 +191,6 @@ cats.forEach(c=>{
 t.innerHTML+=`<button onclick="filterCat('${c}')">${c}</button>`;
 });
 }
-
-let currentCat="ყველა";
 
 function filterCat(c){
 currentCat=c;
